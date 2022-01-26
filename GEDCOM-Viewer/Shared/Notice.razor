@@ -1,0 +1,14 @@
+﻿<div class="alert alert-secondary mt-4">
+    <span class="oi oi-info me-2" aria-hidden="true"></span>
+    <strong>@Title</strong>
+    @Text
+</div>
+
+@code {
+    // Demonstrates how a parent component can supply parameters
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+}

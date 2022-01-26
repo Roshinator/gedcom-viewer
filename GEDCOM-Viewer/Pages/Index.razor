@@ -1,9 +1,19 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Viewer</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Let's see if we can open a file</h1>
 
-Welcome to my new app.
+<InputFile OnChange="@OpenFile">Choose File</InputFile>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<Notice Title="Privacy Notice:" Text="Files will not be stored on a server. All processing happens only on your device."/>
+
+@code
+{
+    IBrowserFile loadedFile;
+
+    async void OpenFile(InputFileChangeEventArgs e)
+    {
+        loadedFile = e.File;
+    }
+}
