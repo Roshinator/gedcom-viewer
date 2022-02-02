@@ -3,7 +3,7 @@
 
 <PageTitle>Viewer</PageTitle>
 
-<h1>Browse People</h1>
+<h1>Analyze a File</h1>
 <Notice Title="Privacy Notice:" Text="Files will not be uploaded or stored on a server. All processing happens only on your device." />
 
 <h2 class="mb-2">Step 1: Open a GEDCOM File</h2>
@@ -24,35 +24,6 @@ else
     <button type="button" class="btn btn-primary mb-4" onclick="@AnalyzeFile">
         Analyze File
     </button>
-}
-
-<h2 class="mb-2">Step 3: Results:</h2>
-@if (MainData.Tree == null)
-{
-    <p><em>Data will be shown here</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>UUID</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in MainData.Tree.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
-            {
-                <tr class="clickable-table" onclick="@(() => OpenPerson(item.Id))">
-                    <td>@item.LastName</td>
-                    <td>@item.FirstName</td>
-                    <td>@item.Id</td>
-                </tr>
-
-            }
-        </tbody>
-    </table>
 }
 
 @code
@@ -105,18 +76,14 @@ else
         Console.WriteLine("Result: " + MainData.Tree.Persons.Count);
         analyzing = false;
         StateHasChanged();
-    }
-
-    void OpenPerson(string id)
-    {
-        Person? p = MainData.Tree.Persons.Find(x =>
+        var succNotif = new
         {
-            Console.WriteLine(x.Id);
-            return x.Id.Equals(id);
-        });
-        if (p != null)
-        {
-            Console.WriteLine("Opened Person " + p.FirstName + " " + p.LastName);
-        }
+            title = "Success",
+            text = string.Format("Found {0} errors and {1} warnings. You can now browse the data.", MainData.Tree.Errors.Count, MainData.Tree.Warnings.Count),
+            icon = "success",
+            customClass = new { confirmButton = "btn btn-primary" },
+            buttonsStyling = false
+        };
+        await JS.InvokeAsync<object>("Swal.fire", succNotif);
     }
 }

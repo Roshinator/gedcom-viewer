@@ -1,0 +1,50 @@
+﻿@page "/all-people"
+@inject NavigationManager NavigationManager
+
+<PageTitle>All People</PageTitle>
+<h1>All People</h1>
+@if (MainData.Tree == null)
+{
+    <p><em>Data will be shown here. Please go to the
+           <NavLink href="/">homepage</NavLink>
+        to upload and analyze a file.</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>UUID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in MainData.Tree.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
+            {
+                <tr class="clickable-table" onclick="@(() => OpenPerson(item.Id))">
+                    <td>@item.LastName</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.Id</td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    void OpenPerson(string id)
+    {
+        Person? p = MainData.Tree.Persons.Find(x =>
+        {
+            Console.WriteLine(x.Id);
+            return x.Id.Equals(id);
+        });
+        if (p != null)
+        {
+            NavigationManager.NavigateTo(String.Format("view-person/{0}", p.Id));
+        }
+    }
+}

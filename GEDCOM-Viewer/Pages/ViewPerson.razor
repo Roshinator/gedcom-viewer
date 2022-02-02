@@ -1,0 +1,48 @@
+﻿@page "/view-person/{Id?}"
+
+@if (Person == null)
+{
+    <PageTitle>View Person</PageTitle>
+    if (MainData.Tree == null)
+    {
+        <p>
+            <em>
+                Data will be shown here. Please go to the
+                <NavLink href="/">homepage</NavLink>
+                to upload and analyze a file.
+            </em>
+        </p>
+    }
+    else
+    {
+        <p>
+            <em>
+                Please select a person in 
+                <NavLink href="all-people">All People</NavLink>
+                to see their information.
+            </em>
+        </p>
+    }
+
+}
+else
+{
+    <PageTitle>@Person.FirstName @Person.LastName</PageTitle>
+    <h1>@Person.FirstName @Person.LastName</h1>
+}
+
+
+@code {
+    [Parameter]
+    public string? Id { get; set; }
+    private Person Person;
+
+    protected override void OnInitialized()
+    {
+        if (MainData.Tree != null)
+        {
+            Person = MainData.Tree.Persons.Find((x) => Id == x.Id);
+        }
+    }
+}
+
