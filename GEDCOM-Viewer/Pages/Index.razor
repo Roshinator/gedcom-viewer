@@ -1,19 +1,62 @@
 ﻿@page "/"
+@inject IJSRuntime JS 
 
 <PageTitle>Viewer</PageTitle>
 
-<h1>Let's see if we can open a file</h1>
+<h1>Browse People</h1>
+<Notice Title="Privacy Notice:" Text="Files will not be stored on a server. All processing happens only on your device." />
 
+<h2>Step 1: Open a GEDCOM File</h2>
 <InputFile OnChange="@OpenFile">Choose File</InputFile>
+<br>
 
-<Notice Title="Privacy Notice:" Text="Files will not be stored on a server. All processing happens only on your device."/>
+<h2>Step 2: Analyze it</h2>
+<button type="button" class="btn btn-primary" onclick="@AnalyzeFile">Analyze File</button>
+<br>
+
+<h2>Step 3: Results:</h2>
+<p id="textArea">@OutputText</p>
 
 @code
 {
-    IBrowserFile loadedFile;
+    IBrowserFile file;
+    string OutputText;
 
     async void OpenFile(InputFileChangeEventArgs e)
     {
-        loadedFile = e.File;
+        file = e.File;
+    }
+
+    async void AnalyzeFile()
+    {
+        if (file == null)
+        {
+            var obj = new
+            {
+                title = "Error",
+                text = "Please select a file",
+                icon = "error",
+                confirmButtonText = "OK"
+            };
+            await JS.InvokeAsync<object>("Swal.fire", obj);
+            return;
+        }
+        OutputText = "Fetching file...";
+        var loadedFile = file;
+        OutputText = "Created alias...";
+        StreamReader streamReader = new StreamReader(loadedFile.OpenReadStream());
+        OutputText = "Opened stream...";
+        List<string> fileData = new List<string>();
+        string temp;
+        temp = await streamReader.ReadLineAsync();
+        OutputText = "Reading File...";
+        while (temp != null)
+        {
+            fileData.Add(temp);
+            temp = await streamReader.ReadLineAsync();
+        }
+        OutputText = "Parsing File...";
+        var result = GedcomParser.Services.FileParser.ParseLines(fileData);
+        OutputText = "Found " + result.Persons.Count + " people";
     }
 }

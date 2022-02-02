@@ -12,4 +12,56 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\CustomSampleTests.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\GedcomStandardTests.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\GedcomTortureTests.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\TypeParserTests.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\Extensions\EnumerableExtensions.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\Extensions\AssemblyExtensions.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\Services\ResourceHelper.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\Services\ZipHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="GedcomParser\src\GedcomParser.Test\TypeParserTests.CanParseKennedyFamily.approved.txt" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\TypeParserTests.CanParseWindsorFamily.approved.txt" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\TypeParserTests.CanParseStefanFamily.approved.txt" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\TypeParserTests.CanParseGedcomStandardSample.approved.txt" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\TypeParserTests.CanParseGedcomTortureSample.approved.txt" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.MAC" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\Document.pdf" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.PCX" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.PIC" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\Document.RTF" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\TGC551.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\TGC551LF.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\suntun.mov" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.BMP" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\Document.tex" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.GIF" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\TGC55C.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\force.wav" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.TIF" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\README.txt" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\Document.DOC" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.PSD" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\top.mpg" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\TGC55CLF.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.TGA" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.JPG" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\enthist.aif" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomTorture\ImgFile.PNG" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\CustomSample\Stefan.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\CustomSample\Windsor.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\CustomSample\MultipleImmigrationEvents.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\CustomSample\MultipleEmigrationEvents.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\CustomSample\Kennedy.ged" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\SSMARR.GED" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\GEDCOM 5.5.5.pdf" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\MINIMAL555.GED" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\REMARR.GED" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\555SAMPLE.GED" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\555SAMPLE16BE.GED" />
+    <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\555SAMPLE16LE.GED" />
+  </ItemGroup>
 </Project>

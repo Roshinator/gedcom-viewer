@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+ <ItemGroup>
+    <ProjectReference Include="..\GedcomParser\GedcomParser.csproj" />
+  </ItemGroup> 
+
+ <ItemGroup>
+    <PackageReference Include="ApprovalTests" Version="5.4.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Shouldly" Version="3.0.2" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+    <PackageReference Include="ZipStorer" Version="3.6.0" />
+  </ItemGroup>
+   
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\CustomSample\Kennedy.ged" />
+    <EmbeddedResource Include="Resources\CustomSample\MultipleEmigrationEvents.ged" />
+    <EmbeddedResource Include="Resources\CustomSample\MultipleImmigrationEvents.ged" />
+    <EmbeddedResource Include="Resources\CustomSample\Stefan.ged" />
+    <EmbeddedResource Include="Resources\CustomSample\Windsor.ged" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\GedcomStandard\555SAMPLE.GED" />
+    <EmbeddedResource Include="Resources\GedcomStandard\555SAMPLE16BE.GED" />
+    <EmbeddedResource Include="Resources\GedcomStandard\555SAMPLE16LE.GED" />
+    <EmbeddedResource Include="Resources\GedcomStandard\MINIMAL555.GED" />
+    <EmbeddedResource Include="Resources\GedcomStandard\REMARR.GED" />
+    <EmbeddedResource Include="Resources\GedcomStandard\SSMARR.GED" />
+  </ItemGroup>   
+ 
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\GedcomTorture\Document.DOC" />
+    <EmbeddedResource Include="Resources\GedcomTorture\Document.pdf" />
+    <EmbeddedResource Include="Resources\GedcomTorture\Document.RTF" />
+    <EmbeddedResource Include="Resources\GedcomTorture\Document.tex" />
+    <EmbeddedResource Include="Resources\GedcomTorture\enthist.aif" />
+    <EmbeddedResource Include="Resources\GedcomTorture\force.wav" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.BMP" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.GIF" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.JPG" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.MAC" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.PCX" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.PIC" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.PNG" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.PSD" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.TGA" />
+    <EmbeddedResource Include="Resources\GedcomTorture\ImgFile.TIF" />
+    <EmbeddedResource Include="Resources\GedcomTorture\README.txt" />
+    <EmbeddedResource Include="Resources\GedcomTorture\suntun.mov" />
+    <EmbeddedResource Include="Resources\GedcomTorture\TGC551.ged" />
+    <EmbeddedResource Include="Resources\GedcomTorture\TGC551LF.ged" />
+    <EmbeddedResource Include="Resources\GedcomTorture\TGC55C.ged" />
+    <EmbeddedResource Include="Resources\GedcomTorture\TGC55CLF.ged" />
+    <EmbeddedResource Include="Resources\GedcomTorture\top.mpg" />
+  </ItemGroup>
+
+</Project>

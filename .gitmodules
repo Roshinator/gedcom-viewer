@@ -1,0 +1,3 @@
+[submodule "GedcomParser"]
+	path = GedcomParser
+	url = https://github.com/jaklithn/GedcomParser
