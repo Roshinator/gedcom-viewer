@@ -64,7 +64,7 @@ else
             fileData.Add(temp);
             temp = await streamReader.ReadLineAsync();
         }
-        MainData.Tree = FileParser.ParseLines(fileData);
+        await Task.Run(() => MainData.Tree = FileParser.ParseLines(fileData));  
         foreach (var warning in MainData.Tree.Warnings)
         {
             Console.WriteLine("WARNING: " + warning);

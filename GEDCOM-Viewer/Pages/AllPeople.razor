@@ -3,14 +3,31 @@
 
 <PageTitle>All People</PageTitle>
 <h1>All People</h1>
-@if (MainData.Tree == null)
+@if (People == null)
 {
-    <p><em>Data will be shown here. Please go to the
-           <NavLink href="/">homepage</NavLink>
-        to upload and analyze a file.</em></p>
+    <p>
+        <em>
+            Data will be shown here. Please go to the
+            <NavLink href="/">homepage</NavLink>
+            to upload and analyze a file.
+        </em>
+    </p>
 }
 else
 {
+<div class="input-group rounded">
+    <span class="input-group-text border-0" id="search-addon">
+        @if (CurrentSearch != null && CurrentSearch.Status > TaskStatus.Created && CurrentSearch.Status < TaskStatus.RanToCompletion)
+        {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        }
+        else
+        {
+            <span class="oi oi-magnifying-glass"></span>
+        }
+    </span>
+    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" oninput="@OnSearchChanged" />
+</div>
     <table class="table">
         <thead>
             <tr>
@@ -20,7 +37,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in MainData.Tree.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
+            @foreach (var item in People.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
             {
                 <tr class="clickable-table" onclick="@(() => OpenPerson(item.Id))">
                     <td>@item.LastName</td>
@@ -34,6 +51,37 @@ else
 }
 
 @code {
+
+    IEnumerable<Person> People = MainData.Tree?.Persons;
+    CancellationTokenSource CancelSource = new CancellationTokenSource();
+    Task CurrentSearch;
+
+    async void OnSearchChanged(ChangeEventArgs e)
+    {
+        Console.WriteLine(e.Value as string);
+        string search = (e.Value as string).ToLower();
+        CancelSource.Cancel();
+        CancelSource.Dispose();
+        CancelSource = new CancellationTokenSource();
+        if (search.IsNullOrEmpty())
+        {
+            People = MainData.Tree?.Persons;
+            return;
+        }
+        CurrentSearch = Task.Run(() =>
+        {
+            List<string> words = new List<string>(search.Split(' '));
+            words.RemoveAll(s => s.IsNullOrEmpty());
+            People = from person in MainData.Tree.Persons
+                     where words.Any((person.FirstName?.ToLower() ?? "").Contains) || words.Any((person.LastName?.ToLower() ?? "").Contains)
+                     select person;
+            Console.WriteLine("Updated people");
+        }, CancelSource.Token);
+        CurrentSearch.Wait();
+        StateHasChanged();
+    }
+
+
 
     void OpenPerson(string id)
     {

@@ -17,7 +17,7 @@
     {
         <p>
             <em>
-                Please select a person in 
+                Please select a person in
                 <NavLink href="all-people">All People</NavLink>
                 to see their information.
             </em>
@@ -29,6 +29,8 @@ else
 {
     <PageTitle>@Person.FirstName @Person.LastName</PageTitle>
     <h1>@Person.FirstName @Person.LastName</h1>
+    <InfoItem Title="Birthday" Info="@Person.Birth?.Date"></InfoItem>
+    <InfoItem Title="Birthplace" Info="@Person.Birth?.Place"></InfoItem>
 }
 
 
