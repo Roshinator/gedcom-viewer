@@ -112,7 +112,7 @@ else
         Person? p = MainData.Tree.Persons.Find(x =>
         {
             Console.WriteLine(x.Id);
-            return x.Uid.Equals(id);
+            return x.Id.Equals(id);
         });
         if (p != null)
         {
