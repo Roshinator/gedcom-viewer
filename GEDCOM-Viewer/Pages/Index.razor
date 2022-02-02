@@ -1,5 +1,5 @@
 ﻿@page "/"
-@inject IJSRuntime JS 
+@inject IJSRuntime JS
 
 <PageTitle>Viewer</PageTitle>
 
@@ -15,14 +15,40 @@
 <br>
 
 <h2>Step 3: Results:</h2>
-<p id="textArea">@OutputText</p>
+@if (MainData.Tree == null)
+{
+    <p><em>Data will be shown here</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>UUID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in MainData.Tree.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
+            {
+                <tr class="clickable-table" onclick="@(() => OpenPerson(item.Id))">
+                    <td>@item.LastName</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.Id</td>
+                </tr>
+                
+            }
+        </tbody>
+    </table>
+}
 
 @code
 {
-    IBrowserFile file;
-    string OutputText;
+    IBrowserFile? file;
+    string OutputText = "Output will appear here";
 
-    async void OpenFile(InputFileChangeEventArgs e)
+    void OpenFile(InputFileChangeEventArgs e)
     {
         file = e.File;
     }
@@ -41,22 +67,39 @@
             await JS.InvokeAsync<object>("Swal.fire", obj);
             return;
         }
-        OutputText = "Fetching file...";
         var loadedFile = file;
-        OutputText = "Created alias...";
         StreamReader streamReader = new StreamReader(loadedFile.OpenReadStream());
-        OutputText = "Opened stream...";
         List<string> fileData = new List<string>();
-        string temp;
+        string? temp;
         temp = await streamReader.ReadLineAsync();
-        OutputText = "Reading File...";
         while (temp != null)
         {
             fileData.Add(temp);
             temp = await streamReader.ReadLineAsync();
         }
-        OutputText = "Parsing File...";
-        var result = GedcomParser.Services.FileParser.ParseLines(fileData);
-        OutputText = "Found " + result.Persons.Count + " people";
+        MainData.Tree = FileParser.ParseLines(fileData);
+        foreach (var warning in MainData.Tree.Warnings)
+        {
+            Console.WriteLine("WARNING: " + warning);
+        }
+        foreach (var error in MainData.Tree.Errors)
+        {
+            Console.WriteLine("ERROR: " + error);
+        }
+        Console.WriteLine("Result: " + MainData.Tree.Persons.Count);
+        StateHasChanged();
+    }
+
+    void OpenPerson(string id)
+    {
+        Person? p = MainData.Tree.Persons.Find(x => 
+            {
+                Console.WriteLine(x.Id);
+                return x.Uid.Equals(id);
+            });
+        if (p != null)
+        {
+            Console.WriteLine("Opened Person " + p.FirstName + " " + p.LastName);
+        }
     }
 }

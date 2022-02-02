@@ -1,0 +1,10 @@
+
+.clickable-table {
+	background-color: transparent;
+	transition: background-color 0.25s;
+}
+
+.clickable-table:hover {
+	background-color: lightgray;
+	transition: background-color 0.25s;
+}
