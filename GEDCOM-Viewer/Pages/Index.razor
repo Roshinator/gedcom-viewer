@@ -4,17 +4,29 @@
 <PageTitle>Viewer</PageTitle>
 
 <h1>Browse People</h1>
-<Notice Title="Privacy Notice:" Text="Files will not be stored on a server. All processing happens only on your device." />
+<Notice Title="Privacy Notice:" Text="Files will not be uploaded or stored on a server. All processing happens only on your device." />
 
-<h2>Step 1: Open a GEDCOM File</h2>
-<InputFile OnChange="@OpenFile">Choose File</InputFile>
+<h2 class="mb-2">Step 1: Open a GEDCOM File</h2>
+<InputFile class="mb-4" OnChange="@OpenFile">Choose File</InputFile>
 <br>
 
-<h2>Step 2: Analyze it</h2>
-<button type="button" class="btn btn-primary" onclick="@AnalyzeFile">Analyze File</button>
-<br>
+<h2 class="mb-2">Step 2: Analyze it</h2>
 
-<h2>Step 3: Results:</h2>
+@if (analyzing)
+{
+    <button type="button" class="btn btn-primary mb-4" onclick="@AnalyzeFile" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Analyzing File
+    </button>
+}
+else
+{
+    <button type="button" class="btn btn-primary mb-4" onclick="@AnalyzeFile">
+        Analyze File
+    </button>
+}
+
+<h2 class="mb-2">Step 3: Results:</h2>
 @if (MainData.Tree == null)
 {
     <p><em>Data will be shown here</em></p>
@@ -37,7 +49,7 @@ else
                     <td>@item.FirstName</td>
                     <td>@item.Id</td>
                 </tr>
-                
+
             }
         </tbody>
     </table>
@@ -47,6 +59,7 @@ else
 {
     IBrowserFile? file;
     string OutputText = "Output will appear here";
+    bool analyzing = false;
 
     void OpenFile(InputFileChangeEventArgs e)
     {
@@ -55,6 +68,7 @@ else
 
     async void AnalyzeFile()
     {
+        analyzing = true;
         if (file == null)
         {
             var obj = new
@@ -62,7 +76,9 @@ else
                 title = "Error",
                 text = "Please select a file",
                 icon = "error",
-                confirmButtonText = "OK"
+                confirmButtonText = "OK",
+                customClass = new { confirmButton = "btn btn-primary" },
+                buttonsStyling = false
             };
             await JS.InvokeAsync<object>("Swal.fire", obj);
             return;
@@ -87,16 +103,17 @@ else
             Console.WriteLine("ERROR: " + error);
         }
         Console.WriteLine("Result: " + MainData.Tree.Persons.Count);
+        analyzing = false;
         StateHasChanged();
     }
 
     void OpenPerson(string id)
     {
-        Person? p = MainData.Tree.Persons.Find(x => 
-            {
-                Console.WriteLine(x.Id);
-                return x.Uid.Equals(id);
-            });
+        Person? p = MainData.Tree.Persons.Find(x =>
+        {
+            Console.WriteLine(x.Id);
+            return x.Uid.Equals(id);
+        });
         if (p != null)
         {
             Console.WriteLine("Opened Person " + p.FirstName + " " + p.LastName);
