@@ -73,7 +73,7 @@ else
             List<string> words = new List<string>(search.Split(' '));
             words.RemoveAll(s => s.IsNullOrEmpty());
             People = from person in MainData.Tree.Persons
-                     where words.Any((person.FirstName?.ToLower() ?? "").Contains) || words.Any((person.LastName?.ToLower() ?? "").Contains)
+                     where words.All(string.Format("{0} {1}", person.FirstName?.ToLower() ?? "", person.LastName?.ToLower() ?? "").Contains)
                      select person;
             Console.WriteLine("Updated people");
         }, CancelSource.Token);
