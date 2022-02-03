@@ -40,6 +40,7 @@ else
     async Task AnalyzeFile()
     {
         analyzing = true;
+        await Task.Yield();
         if (file == null)
         {
             var obj = new
@@ -53,23 +54,42 @@ else
             };
             await JS.InvokeAsync<object>("Swal.fire", obj);
             analyzing = false;
-            StateHasChanged();
             return;
         }
         var loadedFile = file;
-        StreamReader streamReader = new StreamReader(loadedFile.OpenReadStream());
-        List<string> fileData = new List<string>();
-        string? temp;
-        temp = await streamReader.ReadLineAsync();
-        while (temp != null)
+        List<string> fileData;
+        try
         {
-            fileData.Add(temp);
+            StreamReader streamReader = new StreamReader(loadedFile.OpenReadStream());
+            fileData = new List<string>();
+            string? temp;
             temp = await streamReader.ReadLineAsync();
+            while (temp != null)
+            {
+                await Task.Yield();
+                fileData.Add(temp);
+                temp = await streamReader.ReadLineAsync();
+            }
+        }
+        catch (IOException)
+        {
+            var obj = new
+            {
+                title = "Error",
+                text = "An error occured when reading the file.",
+                icon = "error",
+                confirmButtonText = "OK",
+                customClass = new { confirmButton = "btn btn-primary" },
+                buttonsStyling = false
+            };
+            await JS.InvokeAsync<object>("Swal.fire", obj);
+            analyzing = false;
+            return;
         }
         MainData.Tree = await Task.Run(() => FileParser.ParseLines(fileData));  
         foreach (var warning in MainData.Tree.Warnings)
         {
-           // Console.WriteLine("WARNING: " + warning);
+            // Console.WriteLine("WARNING: " + warning);
         }
         foreach (var error in MainData.Tree.Errors)
         {
@@ -78,6 +98,7 @@ else
         Console.WriteLine("Result: " + MainData.Tree.Persons.Count);
         analyzing = false;
         StateHasChanged();
+        await Task.Yield();
         var succNotif = new
         {
             title = "Success",

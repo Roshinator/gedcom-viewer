@@ -22,15 +22,14 @@ else
         <span class="input-group-text border-0" id="search-addon">
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         </span>
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onchange="@OnSearchChanged" />
     }
     else
     {
         <span class="input-group-text border-0" id="search-addon">
             <span class="oi oi-magnifying-glass"></span>
         </span>
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onchange="@OnSearchChanged" />
     }
+    <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onchange="@OnSearchChanged" />
 
 
 </div>
@@ -72,6 +71,7 @@ else
     {
         searching = true;
         StateHasChanged();
+        await Task.Yield();
         if (string.IsNullOrEmpty(str))
         {
             People = MainData.Tree?.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
