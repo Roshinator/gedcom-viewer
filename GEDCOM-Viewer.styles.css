@@ -9,6 +9,18 @@
 	background-color: lightgray;
 	transition: background-color 0.25s;
 }
+
+@media (prefers-color-scheme: dark) {
+	.clickable-table[b-n1xunkycwf] {
+		background-color: transparent;
+		transition: background-color 0.25s;
+	}
+
+	.clickable-table:hover[b-n1xunkycwf] {
+		background-color: dimgray;
+		transition: background-color 0.25s;
+	}
+}
 /* /Shared/MainLayout.razor.rz.scp.css */
 .page[b-r82g2bg6yy] {
     position: relative;
