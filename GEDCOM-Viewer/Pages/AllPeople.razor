@@ -58,9 +58,9 @@ else
 
 @code {
 
-    IEnumerable<Person> People = MainData.Tree?.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
+    IEnumerable<Person>? People = MainData.Tree?.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
     CancellationTokenSource CancelSource = new CancellationTokenSource();
-    Task CurrentSearch;
+    Task? CurrentSearch;
     bool searching = false;
 
     async void OnSearchChanged(ChangeEventArgs e)
@@ -68,11 +68,11 @@ else
         await UpdateSearch(e.Value as string);
     }
 
-    async Task UpdateSearch(string str)
+    async Task UpdateSearch(string? str)
     {
         searching = true;
         StateHasChanged();
-        if (str.IsNullOrEmpty())
+        if (string.IsNullOrEmpty(str))
         {
             People = MainData.Tree?.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             return;
@@ -95,7 +95,7 @@ else
         });
         if (p != null)
         {
-            NavigationManager.NavigateTo(String.Format("view-person/{0}", p.Id));
+            NavigationManager.NavigateTo(string.Format("view-person/{0}", p.Id));
         }
     }
     }

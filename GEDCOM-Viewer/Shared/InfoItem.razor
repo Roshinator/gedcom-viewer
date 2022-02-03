@@ -1,6 +1,11 @@
 ﻿@if (Info != null)
 {
-    <b>@Title: </b>@(Info)
+    <em>@Title: </em>
+    @if (InfoOnNewLine)
+    {
+        <br/>
+    }
+    @(Info)
     <br />
 }
 
@@ -13,5 +18,8 @@
 
     [Parameter]
     public string? Info { get; set; }
+
+    [Parameter]
+    public bool InfoOnNewLine { get; set; } = false;
 }
 

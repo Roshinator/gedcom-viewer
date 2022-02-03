@@ -29,21 +29,28 @@ else
 {
     <PageTitle>@Person.FirstName @Person.LastName</PageTitle>
     <h1>@Person.FirstName @Person.LastName</h1>
+    <InfoItem Title="Gender" Info="@Person.Gender" />
+    <PersonRefItem Title="Parents" People="@(from relation in MainData.Tree.ChildRelations where relation.From.Id == Person.Id select relation.To)"/>
+    <PersonRefItem Title="Children" People="@(from relation in MainData.Tree.ChildRelations where relation.To.Id == Person.Id select relation.From)"/>
+    <PersonRefItem Title="Siblings" People="@(from relation in MainData.Tree.SiblingRelations where relation.From.Id == Person.Id select relation.To)"/>
+    <PersonRefItem Title="Spouse" People="@(from relation in MainData.Tree.SpouseRelations where relation.From.Id == Person.Id select relation.To)"/>
     <InfoItem Title="Birthday" Info="@Person.Birth?.Date" />
     <InfoItem Title="Birthplace" Info="@Person.Birth?.Place" />
     <InfoItem Title="Birth Notes" Info="@Person.Birth?.Note" />
     <InfoItem Title="Death" Info="@Person.Death?.Date" />
     <InfoItem Title="Death Location" Info="@Person.Death?.Place" />
     <InfoItem Title="Address" Info="@Person.Address?.ToString()" />
+    <InfoItem Title="Education" Info="@Person.Education" />
+    <InfoItem Title="Notes" Info="@Person.Note" InfoOnNewLine="true"></InfoItem>
 }
 
 
 @code {
     [Parameter]
     public string? Id { get; set; }
-    private Person Person;
+    private Person? Person;
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         if (MainData.Tree != null)
         {

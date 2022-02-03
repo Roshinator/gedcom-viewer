@@ -1,0 +1,25 @@
+﻿@if (People != null && People.Count() > 0)
+{
+    <em>@Title: </em>
+    @foreach (var person in People)
+    {
+       
+        <NavLink href="@string.Format("view-person/{0}", person.Id)">
+            @(string.Format("{0} {1}", person.FirstName, person.LastName).Trim())
+        </NavLink>
+        <span>&nbsp;</span>
+    }
+    <br />
+}
+
+
+
+@code {
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public IEnumerable<Person> People { get; set; }
+}
+
