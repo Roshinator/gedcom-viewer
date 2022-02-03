@@ -52,6 +52,8 @@ else
                 buttonsStyling = false
             };
             await JS.InvokeAsync<object>("Swal.fire", obj);
+            analyzing = false;
+            StateHasChanged();
             return;
         }
         var loadedFile = file;

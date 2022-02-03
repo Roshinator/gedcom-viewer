@@ -29,8 +29,12 @@ else
 {
     <PageTitle>@Person.FirstName @Person.LastName</PageTitle>
     <h1>@Person.FirstName @Person.LastName</h1>
-    <InfoItem Title="Birthday" Info="@Person.Birth?.Date"></InfoItem>
-    <InfoItem Title="Birthplace" Info="@Person.Birth?.Place"></InfoItem>
+    <InfoItem Title="Birthday" Info="@Person.Birth?.Date" />
+    <InfoItem Title="Birthplace" Info="@Person.Birth?.Place" />
+    <InfoItem Title="Birth Notes" Info="@Person.Birth?.Note" />
+    <InfoItem Title="Death" Info="@Person.Death?.Date" />
+    <InfoItem Title="Death Location" Info="@Person.Death?.Place" />
+    <InfoItem Title="Address" Info="@Person.Address?.ToString()" />
 }
 
 
