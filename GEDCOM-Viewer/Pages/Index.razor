@@ -14,14 +14,14 @@
 
 @if (analyzing)
 {
-    <button type="button" class="btn btn-primary mb-4" onclick="@AnalyzeFile" disabled>
+    <button type="button" class="btn btn-primary mb-4" onclick="@(async () => await AnalyzeFile())" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         Analyzing File
     </button>
 }
 else
 {
-    <button type="button" class="btn btn-primary mb-4" onclick="@AnalyzeFile">
+    <button type="button" class="btn btn-primary mb-4" onclick="@(async () => await AnalyzeFile())">
         Analyze File
     </button>
 }
@@ -37,7 +37,7 @@ else
         file = e.File;
     }
 
-    async void AnalyzeFile()
+    async Task AnalyzeFile()
     {
         analyzing = true;
         if (file == null)
@@ -66,14 +66,14 @@ else
             fileData.Add(temp);
             temp = await streamReader.ReadLineAsync();
         }
-        await Task.Run(() => MainData.Tree = FileParser.ParseLines(fileData));  
+        MainData.Tree = await Task.Run(() => FileParser.ParseLines(fileData));  
         foreach (var warning in MainData.Tree.Warnings)
         {
-            Console.WriteLine("WARNING: " + warning);
+           // Console.WriteLine("WARNING: " + warning);
         }
         foreach (var error in MainData.Tree.Errors)
         {
-            Console.WriteLine("ERROR: " + error);
+            //Console.WriteLine("ERROR: " + error);
         }
         Console.WriteLine("Result: " + MainData.Tree.Persons.Count);
         analyzing = false;
