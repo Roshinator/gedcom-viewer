@@ -73,7 +73,6 @@ else
             People = from person in MainData.Tree.Persons
                      orderby Fuzz.TokenSetRatio(search,
                         ((person.FirstName ?? "") + " " + (person.LastName ?? "")).ToLower()) descending
-                     where x > 50
                      select person;
             Console.WriteLine("Updated people");
         }, CancelSource.Token);
