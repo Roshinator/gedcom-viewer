@@ -52,8 +52,10 @@ else
                 customClass = new { confirmButton = "btn btn-primary" },
                 buttonsStyling = false
             };
-            await JS.InvokeAsync<object>("Swal.fire", obj);
             analyzing = false;
+            StateHasChanged();
+            await Task.Yield();
+            await JS.InvokeAsync<object>("Swal.fire", obj);
             return;
         }
         var loadedFile = file;
@@ -70,23 +72,26 @@ else
                 fileData.Add(temp);
                 temp = await streamReader.ReadLineAsync();
             }
+            MainData.Tree = await Task.Run(() => FileParser.ParseLines(fileData));
         }
-        catch (IOException)
+        catch (Exception e)
         {
+            string message = "An error occured when reading the file. GEDCOM file may be corrupted.";
             var obj = new
             {
                 title = "Error",
-                text = "An error occured when reading the file.",
+                text = message,
                 icon = "error",
                 confirmButtonText = "OK",
                 customClass = new { confirmButton = "btn btn-primary" },
                 buttonsStyling = false
             };
-            await JS.InvokeAsync<object>("Swal.fire", obj);
             analyzing = false;
+            StateHasChanged();
+            await Task.Yield();
+            await JS.InvokeAsync<object>("Swal.fire", obj);
             return;
         }
-        MainData.Tree = await Task.Run(() => FileParser.ParseLines(fileData));  
         foreach (var warning in MainData.Tree.Warnings)
         {
             // Console.WriteLine("WARNING: " + warning);
