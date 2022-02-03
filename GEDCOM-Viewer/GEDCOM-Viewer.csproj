@@ -10,6 +10,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.1" PrivateAssets="all" />
+    <PackageReference Include="FuzzySharp" Version="2.0.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,5 +64,6 @@
     <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\555SAMPLE.GED" />
     <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\555SAMPLE16BE.GED" />
     <None Remove="GedcomParser\src\GedcomParser.Test\Resources\GedcomStandard\555SAMPLE16LE.GED" />
+    <None Remove="FuzzySharp" />
   </ItemGroup>
 </Project>

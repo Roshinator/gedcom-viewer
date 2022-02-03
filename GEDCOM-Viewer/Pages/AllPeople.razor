@@ -37,7 +37,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in People.OrderBy(x => x.LastName).ThenBy(x => x.FirstName))
+            @foreach (var item in People)
             {
                 <tr class="clickable-table" onclick="@(() => OpenPerson(item.Id))">
                     <td>@item.LastName</td>
@@ -52,7 +52,7 @@ else
 
 @code {
 
-    IEnumerable<Person> People = MainData.Tree?.Persons;
+    IEnumerable<Person> People = MainData.Tree?.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
     CancellationTokenSource CancelSource = new CancellationTokenSource();
     Task CurrentSearch;
 
@@ -65,15 +65,15 @@ else
         CancelSource = new CancellationTokenSource();
         if (search.IsNullOrEmpty())
         {
-            People = MainData.Tree?.Persons;
+            People = MainData.Tree?.Persons.OrderBy(x => x.LastName).ThenBy(x => x.FirstName);
             return;
         }
         CurrentSearch = Task.Run(() =>
         {
-            List<string> words = new List<string>(search.Split(' '));
-            words.RemoveAll(s => s.IsNullOrEmpty());
             People = from person in MainData.Tree.Persons
-                     where words.All(string.Format("{0} {1}", person.FirstName?.ToLower() ?? "", person.LastName?.ToLower() ?? "").Contains)
+                     orderby Fuzz.TokenSetRatio(search,
+                        ((person.FirstName ?? "") + " " + (person.LastName ?? "")).ToLower()) descending
+                     where x > 50
                      select person;
             Console.WriteLine("Updated people");
         }, CancelSource.Token);
