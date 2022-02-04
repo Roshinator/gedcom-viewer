@@ -1,5 +1,6 @@
 ﻿@page "/"
 @inject IJSRuntime JS
+@inject NavigationManager NavigationManager
 
 <PageTitle>Viewer</PageTitle>
 
@@ -31,6 +32,24 @@ else
     IBrowserFile? file;
     string OutputText = "Output will appear here";
     bool analyzing = false;
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();
+        if (MainData.Tree != null)
+        { 
+            var obj = new
+            {
+                title = "File Already Scanned",
+                text = "You have already scanned a file. Select \"All People\" to view the data, or close this message to scan a new file.",
+                icon = "info",
+                confirmButtonText = "Close",
+                customClass = new { confirmButton = "btn btn-primary" },
+                buttonsStyling = false
+            };
+            await JS.InvokeAsync<object>("Swal.fire", obj);
+        }
+    }
 
     void OpenFile(InputFileChangeEventArgs e)
     {
@@ -92,13 +111,14 @@ else
             await JS.InvokeAsync<object>("Swal.fire", obj);
             return;
         }
+        MainData.Tree.Warnings.RemoveWhere(str => str.Contains("FAMC") || str.Contains("FAMS"));
         foreach (var warning in MainData.Tree.Warnings)
         {
-            // Console.WriteLine("WARNING: " + warning);
+            Console.WriteLine("WARNING: " + warning);
         }
         foreach (var error in MainData.Tree.Errors)
         {
-            //Console.WriteLine("ERROR: " + error);
+            Console.WriteLine("ERROR: " + error);
         }
         Console.WriteLine("Result: " + MainData.Tree.Persons.Count);
         analyzing = false;
@@ -113,5 +133,6 @@ else
             buttonsStyling = false
         };
         await JS.InvokeAsync<object>("Swal.fire", succNotif);
+        NavigationManager.NavigateTo("all-people");
     }
 }
