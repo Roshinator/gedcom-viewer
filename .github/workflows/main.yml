@@ -28,7 +28,7 @@ jobs:
       with:
         find: "return r.loadResource\\(o,t\\(o\\),e\\[o\\],n\\)"
         replace: "var p = r.loadResource(o,t(o),e[o],n); p.response.then((x) => { if (typeof window.loadResourceCallback === 'function') { window.loadResourceCallback(Object.keys(e).length, o, x);}}); return p;"
-        include: "blazor.webassembly.js"
+        include: "release/wwwroot/_framework/blazor.webassembly.js"
     
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
