@@ -40,10 +40,10 @@ else
     @DrawSimpleItem("Death Notes", Person.Death?.Note) @*Kira time*@
     @DrawDatePlace("Buried", Person.Buried);
     @DrawSimpleItem("Burial Notes", Person.Buried?.Note)
-    @DrawPersonList("Parents", from relation in MainData.Tree.ChildRelations where relation.From.Id == Person.Id select relation.To)
-    @DrawPersonList("Children", from relation in MainData.Tree.ChildRelations where relation.To.Id == Person.Id select relation.From)
-    @DrawPersonList("Siblings", from relation in MainData.Tree.SiblingRelations where relation.From.Id == Person.Id select relation.To)
-    @DrawPersonList("Spouse", from relation in MainData.Tree.SpouseRelations where relation.From.Id == Person.Id select relation.To)
+    @DrawPersonList("Parents", from relation in MainData.Tree.ChildRelations where relation.From.Id == Person.Id group relation by relation.To into sorted select sorted.First().To)
+    @DrawPersonList("Children", from relation in MainData.Tree.ChildRelations where relation.To.Id == Person.Id group relation by relation.From into sorted select sorted.First().From)
+    @DrawPersonList("Siblings", from relation in MainData.Tree.SiblingRelations where relation.From.Id == Person.Id group relation by relation.To into sorted select sorted.First().To)
+    @DrawPersonList("Spouse", from relation in MainData.Tree.SpouseRelations where relation.From.Id == Person.Id group relation by relation.To into sorted select sorted.First().To)
     @DrawDatePlace("Baptized", Person.Baptized);
     @DrawSimpleItem("Baptization Notes", Person.Baptized?.Note)
     @DrawSimpleItem("Education", Person.Education)
