@@ -1,0 +1,24 @@
+﻿@page "/about"
+<h1>About</h1>
+This project was developed using the following libraries:
+<br/>
+
+Under the MIT License:<br/>
+@DrawLibrary("ASP.NET Core", "https://github.com/dotnet/aspnetcore")
+@DrawLibrary("Bootstrap", "https://github.com/twbs/bootstrap")
+@DrawLibrary("FuzzySharp", "https://github.com/JakeBayer/FuzzySharp")
+@DrawLibrary("SweetAlert2", "https://github.com/sweetalert2/sweetalert2")
+@DrawLibrary("SweetAlert2 Dark Theme", "https://github.com/sweetalert2/sweetalert2-themes")
+
+Under the Apache 2.0 License:<br/>
+@DrawLibrary("GedcomParser", "https://github.com/jaklithn/GedcomParser")
+
+@code {
+
+    RenderFragment DrawLibrary(string lib, string link)
+    {
+        return @<div><a href="@link" target="_blank">@lib</a><br/></div>;
+    }
+
+}
+
