@@ -22,6 +22,10 @@
     <Compile Remove="GedcomParser\src\GedcomParser.Test\Extensions\AssemblyExtensions.cs" />
     <Compile Remove="GedcomParser\src\GedcomParser.Test\Services\ResourceHelper.cs" />
     <Compile Remove="GedcomParser\src\GedcomParser.Test\Services\ZipHandler.cs" />
+    <Compile Remove="GedcomParser\src\GedcomParser\bin\**" />
+    <Compile Remove="GedcomParser\src\GedcomParser\obj\**" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\bin\**" />
+    <Compile Remove="GedcomParser\src\GedcomParser.Test\obj\**" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="GedcomParser\src\GedcomParser.Test\TypeParserTests.CanParseKennedyFamily.approved.txt" />
