@@ -23,13 +23,6 @@ jobs:
     - name: Change base-tag in index.html from / to /{repo name}
       run: sed -i 's/<base href="\/" \/>/<base href="\/gedcom-viewer\/" \/>/g' release/wwwroot/index.html
     
-    - name: Patch blazor.webassembly.js
-      uses: jacobtomlinson/gha-find-replace@master
-      with:
-        find: "return r.loadResource\\(o,t\\(o\\),e\\[o\\],n\\)"
-        replace: "var p = r.loadResource(o,t(o),e[o],n); p.response.then((x) => { if (typeof window.loadResourceCallback === 'function') { window.loadResourceCallback(Object.keys(e).length, o, x);}}); return p;"
-        include: "release/wwwroot/_framework/blazor.webassembly.js"
-    
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
       
