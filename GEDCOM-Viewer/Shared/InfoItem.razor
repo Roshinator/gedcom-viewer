@@ -4,8 +4,14 @@
     @if (InfoOnNewLine)
     {
         <br/>
+        <div class="ps-3">
+            @(ChildContent)
+        </div>
     }
-    @(ChildContent)
+    else
+    {
+        @(ChildContent)
+    }
     <br />
 }
 
