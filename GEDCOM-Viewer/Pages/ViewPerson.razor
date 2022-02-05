@@ -1,4 +1,5 @@
 ﻿@page "/view-person/{Id?}"
+@using System.Text
 
 @if (Person == null)
 {
@@ -29,19 +30,39 @@ else
 {
     <PageTitle>@Person.FirstName @Person.LastName</PageTitle>
     <h1>@Person.FirstName @Person.LastName</h1>
-    <InfoItem Title="Gender" Info="@Person.Gender" />
-    <PersonRefItem Title="Parents" People="@(from relation in MainData.Tree.ChildRelations where relation.From.Id == Person.Id select relation.To)"/>
-    <PersonRefItem Title="Children" People="@(from relation in MainData.Tree.ChildRelations where relation.To.Id == Person.Id select relation.From)"/>
-    <PersonRefItem Title="Siblings" People="@(from relation in MainData.Tree.SiblingRelations where relation.From.Id == Person.Id select relation.To)"/>
-    <PersonRefItem Title="Spouse" People="@(from relation in MainData.Tree.SpouseRelations where relation.From.Id == Person.Id select relation.To)"/>
-    <InfoItem Title="Birthday" Info="@Person.Birth?.Date" />
-    <InfoItem Title="Birthplace" Info="@Person.Birth?.Place" />
-    <InfoItem Title="Birth Notes" Info="@Person.Birth?.Note" />
-    <InfoItem Title="Death" Info="@Person.Death?.Date" />
-    <InfoItem Title="Death Location" Info="@Person.Death?.Place" />
-    <InfoItem Title="Address" Info="@Person.Address?.ToString()" />
-    <InfoItem Title="Education" Info="@Person.Education" />
-    <InfoItem Title="Notes" Info="@Person.Note" InfoOnNewLine="true"></InfoItem>
+    @DrawSimpleItem("Gender", Person.Gender)
+    @DrawDatePlace("Birth", Person.Birth)
+    @DrawSimpleItem("Birth Notes" ,Person.Birth?.Note)
+    @DrawDatePlace("Adoption", Person.Adoption?.DatePlace)
+    @DrawSimpleItem("Adoption Type", Person.Adoption?.Type)
+    @DrawSimpleItem("Adoption Notes", Person.Adoption?.Note)
+    @DrawDatePlace("Death", Person.Death);
+    @DrawSimpleItem("Death Notes", Person.Death?.Note) @*Kira time*@
+    @DrawDatePlace("Buried", Person.Buried);
+    @DrawSimpleItem("Burial Notes", Person.Buried?.Note)
+    @DrawPersonList("Parents", from relation in MainData.Tree.ChildRelations where relation.From.Id == Person.Id select relation.To)
+    @DrawPersonList("Children", from relation in MainData.Tree.ChildRelations where relation.To.Id == Person.Id select relation.From)
+    @DrawPersonList("Siblings", from relation in MainData.Tree.SiblingRelations where relation.From.Id == Person.Id select relation.To)
+    @DrawPersonList("Spouse", from relation in MainData.Tree.SpouseRelations where relation.From.Id == Person.Id select relation.To)
+    @DrawDatePlace("Baptized", Person.Baptized);
+    @DrawSimpleItem("Baptization Notes", Person.Baptized?.Note)
+    @DrawSimpleItem("Education", Person.Education)
+    @DrawSimpleItem("Religion", Person.Religion)
+    @DrawSimpleItem("Changed", Person.Changed)
+    @DrawSimpleItem("Occupation", Person.Occupation)
+    @DrawSimpleItem("Health", Person.Health)
+    @DrawSimpleItem("Title", Person.Title)
+    @DrawSimpleItem("Address", CommaSeparatedString(Person.Address?.Street, Person.Address?.City, Person.Address?.State, Person.Address?.Country, Person.Address?.ZipCode))
+    @DrawDatePlace("Residence", Person.Residence);
+    @DrawDatePlaceList("Emigrated", Person.Emigrated);
+    @DrawDatePlaceList("Immigrated", Person.Immigrated);
+    @DrawDatePlace("Becoming Citizen", Person.BecomingCitizen);
+    @DrawDatePlace("Graduation", Person.Graduation);
+    @DrawSimpleItem("Phone", CommaSeparatedString(Person.Address?.Phone))
+    @DrawSimpleItem("Fax", CommaSeparatedString(Person.Address?.Fax))
+    @DrawSimpleItem("Email", CommaSeparatedString(Person.Address?.Email))
+    @DrawSimpleItem("Web", CommaSeparatedString(Person.Address?.Web))
+    @DrawSimpleItem("Notes", Person.Note, newLine:true);
 }
 
 
@@ -56,6 +77,88 @@ else
         {
             Person = MainData.Tree.Persons.Find((x) => Id == x.Id);
         }
+    }
+
+    RenderFragment? DrawSimpleItem(string title, string? str, bool newLine = false)
+    {
+        if (!string.IsNullOrWhiteSpace(str))
+        {
+            return @<InfoItem Title="@title" InfoOnNewLine="@newLine">@str</InfoItem>;
+        }
+        return null;
+    }
+
+    RenderFragment? DrawPersonList(string title, IEnumerable<Person> people)
+    {
+        if (people != null && people.Count() > 0)
+        {
+            return 
+            @<InfoItem Title="@title">
+                    @foreach (var person in people)
+                    {
+                        <PersonRefItem Person="@person" />
+                        <span>&nbsp;</span>
+                    }           
+            </InfoItem>;
+        }
+        return null;
+    }
+
+    RenderFragment? DrawDatePlace(string title, DatePlace? dp)
+    {
+        if (dp == null)
+            return null;
+        string s = string.Format("Date: {0}, Place: {1}", dp.Date ?? "Unknown", dp.Place ?? "Unknown");
+        return @<InfoItem Title="@title">@s</InfoItem>
+    ;
+    }
+
+    RenderFragment? DrawDatePlaceList(string title, IEnumerable<DatePlace?>? dpList)
+    {
+        if (dpList == null || dpList.Count() == 0)
+            return null;
+        StringBuilder s = new StringBuilder();
+        foreach (DatePlace? dp in dpList)
+        {
+            if (dp == null)
+                continue;
+            s.AppendFormat("Date: {0}, Place: {1}\n", dp.Date ?? "Unknown", dp.Place ?? "Unknown");
+       
+        }
+         return @<InfoItem Title="@title" InfoOnNewLine="true">@s.ToString()</InfoItem>;
+    }
+
+    static string CommaSeparatedString(params string?[] items)
+    {
+        StringBuilder s = new StringBuilder();
+        foreach (string str in items)
+        {
+            if (str != null)
+                s.AppendFormat("{0}, ", str);
+        }
+        if (s.Length >= 2)
+        {
+            s.Remove(s.Length - 2, 2);
+        }
+        return s.ToString();
+    }
+
+    static string CommaSeparatedString(IEnumerable<string?>? items)
+    {
+        StringBuilder s = new StringBuilder();
+        if (items != null)
+        {
+            foreach (string? str in items)
+            {
+                if (str != null)
+                    s.AppendFormat("{0}, ", str);
+            }
+        }
+        if (s.Length >= 2)
+        {
+            s.Remove(s.Length - 2, 2);
+        }
+        return s.ToString();
     }
 }
 

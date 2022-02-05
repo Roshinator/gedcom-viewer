@@ -1,11 +1,11 @@
-﻿@if (Info != null)
+﻿@if (ChildContent != null)
 {
     <em>@Title: </em>
     @if (InfoOnNewLine)
     {
         <br/>
     }
-    @(Info)
+    @(ChildContent)
     <br />
 }
 
@@ -17,7 +17,7 @@
     public string? Title { get; set; }
 
     [Parameter]
-    public string? Info { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     [Parameter]
     public bool InfoOnNewLine { get; set; } = false;
