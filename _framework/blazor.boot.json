@@ -8,7 +8,7 @@
   "resources": {
     "assembly": {
       "FuzzySharp.dll": "sha256-YKRmwljOUBO2iSTDTW9\/PExwY9HdfpkAzdzQEfDMIE4=",
-      "GEDCOM-Viewer.dll": "sha256-c6\/v3hKA1uBc7c3QNaYV4DEbN7wP4WtU2VskRdJxpOg=",
+      "GEDCOM-Viewer.dll": "sha256-O4VBE93uG87UeQVhF31zmSb5sOmpIRe2X\/IAuEupNhY=",
       "Microsoft.AspNetCore.Components.dll": "sha256-lQrsF\/07KsSk7QYr+HIkJmDz+DQKWto6CDgYKv\/9Agg=",
       "Microsoft.AspNetCore.Components.Web.dll": "sha256-ZLJBFaXfjjRkQgB\/N+qmNnkbpPCHMen\/Mrxi6wT5nlE=",
       "Microsoft.AspNetCore.Components.WebAssembly.dll": "sha256-kkNJ2UP2JuYeVrhHr2mG1gYv2EShFOTNOoUL9kIDYNc=",
@@ -37,7 +37,7 @@
       "System.Private.Runtime.InteropServices.JavaScript.dll": "sha256-KFz8KoRBgpJlDrZvYAM9R0Cz0vDFmbfmjT2wlkgwp9Q=",
       "System.Private.Uri.dll": "sha256-5r0WfGlonucskxAJ+jxj5iXceJpx0x2Lg69ezMaJ6kg=",
       "System.Runtime.CompilerServices.Unsafe.dll": "sha256-NJPcPizDV6A4CjOnszxYro9mJMWaHq2cGM2\/A0bAFNY=",
-      "System.Runtime.dll": "sha256-UHHcqZbr23sOnFPd4uxiFp\/2WbpgFkbSqjrSThcO7\/E=",
+      "System.Runtime.dll": "sha256-zhR6drXrDdQEK3QXj970M9E3H6FKzSMjzW5KeUGTP8g=",
       "System.Runtime.Extensions.dll": "sha256-m4F9m2pAN7n0YW7pFH6dXn6TwsC4VpAfrhdONjYE2BQ=",
       "System.Text.Encodings.Web.dll": "sha256-8MgxqGsBjU\/FR\/ntwAQr0x\/AG7jJ9f8Kn9shBpC23Dc=",
       "System.Text.Json.dll": "sha256-h1gSW4w1+fI7A7eM\/ior6+iIzwapNa1J1FGPDwQpqe0=",
@@ -48,9 +48,9 @@
     "libraryInitializers": null,
     "pdb": null,
     "runtime": {
-      "dotnet.6.0.1.colvcnejfu.js": "sha256-ALaNggFGgVRbcjKGfv8DzFLSK42hyqu3eP99yoAM+bg=",
+      "dotnet.6.0.1.colvcnejfu.js": "sha256-DUrqxyBDOu15yyi00SFlaMvhFcMIrDW3UItWiCCx4lU=",
       "dotnet.timezones.blat": "sha256-2kYo2V\/aZ7htYEvY5PVJlrMYhFf1jH8\/VS+SP7B7QUg=",
-      "dotnet.wasm": "sha256-NEy4FqVpYtx3L37mOBNHHz\/aGgPl3mG1yf0IBDl9ICc=",
+      "dotnet.wasm": "sha256-KzZ0L2ti7dmQe7KvzhbUJdGRHrcSvSVhXJHP2NeHy3M=",
       "icudt_CJK.dat": "sha256-WPyI4hWDPnOw62Nr27FkzGjdbucZnQD+Ph+GOPhAedw=",
       "icudt_EFIGS.dat": "sha256-4RwaPx87Z4dvn77ie\/ro3\/QzyS+\/gGmO3Y\/0CSAXw4k=",
       "icudt_no_CJK.dat": "sha256-OxylFgLJlFqixsj+nLxYVsv5iZLvfIKMpLf9hrWaChA=",
