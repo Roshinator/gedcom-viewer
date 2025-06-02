@@ -21,8 +21,8 @@ jobs:
     - name: Publish .NET Project
       run: dotnet workload install wasm-tools && dotnet publish GEDCOM-Viewer/GEDCOM-Viewer.csproj -c Release -o release --nologo
         
-    - name: Change base-tag in index.html from / to /{repo name}
-      run: sed -i 's/<base href="\/" \/>/<base href="\/gedcom-viewer\/" \/>/g' release/wwwroot/index.html
+    # - name: Change base-tag in index.html from / to /{repo name}
+    #   run: sed -i 's/<base href="\/" \/>/<base href="\/gedcom-viewer\/" \/>/g' release/wwwroot/index.html
     
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
